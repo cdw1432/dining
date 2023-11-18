@@ -13,7 +13,7 @@ app.use("/v1", userRoute);
 
 app.get('/api/data', (req, res) => {
 
-    const data = `from server`
+    const data = `message from server`
     res.json(data);
   });
   
