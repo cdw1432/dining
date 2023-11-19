@@ -5,14 +5,14 @@ defineProps({
     required: true
   }
 })
+const handleMsgClick = () => {
+  location.reload();
+};
 </script>
 
 <template>
   <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <h3>
-      daily menu
-    </h3>
+    <h1 class="green" @click="handleMsgClick">{{ msg }}</h1>
   </div>
 </template>
 
@@ -31,6 +31,7 @@ h3 {
 .greetings h1,
 .greetings h3 {
   text-align: center;
+  cursor: pointer;
 }
 
 @media (min-width: 1024px) {
