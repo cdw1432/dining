@@ -1,6 +1,12 @@
 <script>
 import axios from 'axios'
   export default {
+    data() {
+    return {
+      dataFromServer : null
+    };
+  },
+
     created() {
       this.getDataFromServer();
     },
@@ -9,7 +15,7 @@ import axios from 'axios'
         axios.get('http://localhost:3000/v1/meal/dlg')
         .then(response => {
           this.dataFromServer = response.data;
-          console.log(response.data);
+          console.log(this.dataFromServer);
         })
         .catch(error => {
           console.error('Error fetching data:', error);
@@ -22,15 +28,17 @@ import axios from 'axios'
 <template>
   <div class="dlg">
     <h1>This is a dlg page</h1>
+    <pre>{{ JSON.stringify(dataFromServer, null, 2) }}</pre>
   </div>
+
 </template>
 
 <style>
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
   .dlg {
     min-height: 100vh;
     display: flex;
     align-items: center;
   }
-}
+} */
 </style>

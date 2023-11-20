@@ -1,6 +1,11 @@
 <script>
 import axios from 'axios'
   export default {
+    data() {
+    return {
+      dataFromServer : null
+    };
+  },
     created() {
       this.getDataFromServer();
     },
@@ -22,16 +27,18 @@ import axios from 'axios'
 <template>
     <div class="portola">
       <h1>This is a portola page</h1>
+      <pre>{{ JSON.stringify(dataFromServer, null, 2) }}</pre>
+     
     </div>
   </template>
   
   <style>
-  @media (min-width: 1024px) {
+  /* @media (min-width: 1024px) {
     .portola {
       min-height: 100vh;
       display: flex;
       align-items: center;
     }
-  }
+  } */
   </style>
   

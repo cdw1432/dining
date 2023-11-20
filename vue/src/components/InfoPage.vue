@@ -11,13 +11,16 @@ export default {
     };
   },
   created() {
-    // Set dates for tomorrow and the day after tomorrow
+
     this.tomorrow.setDate(this.today.getDate() + 1);
     this.dayAfterTomorrow.setDate(this.today.getDate() + 2);
     this.selectedDate = 'TODAY ' + this.formatDate(this.today)
     
-    this.sendSelectedDateToServer(this.today.toISOString().split('T')[0])
-  },
+    this.sendSelectedDateToServer(this.today.toLocaleDateString('en-US', {
+  year: 'numeric',
+  day: '2-digit',
+  month: '2-digit',
+}))},
   methods: {
     formatDate(date) {
       return date.toLocaleDateString('en-US', {
@@ -26,13 +29,20 @@ export default {
         year: 'numeric'
       });
     },
-    selectDate(date, format) {
+    selectDate(date, format, num) {
       this.selectedDate = date;
-      this.sendSelectedDateToServer(new Date(format).toISOString().split('T')[0])
+      this.selectedNum = num
+      this.sendSelectedDateToServer(new Date(format).toLocaleDateString('en-US', {
+  year: 'numeric',
+  day: '2-digit',
+  month: '2-digit',
+}))
     },
-    sendSelectedDateToServer(date) {
-      axios
-        .post('http://localhost:3000/api/data', { data: date })
+     sendSelectedDateToServer(date) {
+      let arr = date.split('/');
+      let formatted = arr[2] + '-' + arr[0] + '-' + arr[1]
+       axios
+        .post('http://localhost:3000/v1/api/data', { data: formatted })
         .then((response) => {
           console.log(response.data);
         })
@@ -49,15 +59,15 @@ export default {
     <h1>Dinner Menu for</h1>
     <h2 >selected date: <a class="date">{{ selectedDate }}</a></h2>
     <div>
-      <a @click="selectDate(`TODAY ${formatDate(today)}`, `${today}`)" :class="{ 'selected': selectedNum === 1 }">TODAY, {{ formatDate(today) }}</a>
+      <a @click="selectDate(`TODAY ${formatDate(today)}`, `${formatDate(today)}`, 1)" :class="{ 'selected': selectedNum === 1 }">TODAY, {{ formatDate(today) }}</a>
     </div>
 
     <div>
-      <a @click="selectDate(`TMRW ${formatDate(tomorrow)}`,`${tomorrow}`)" :class="{ 'selected': selectedNum === 2 }" >TMRW, {{ formatDate(tomorrow) }}</a>
+      <a @click="selectDate(`TMRW ${formatDate(tomorrow)}`,`${formatDate(tomorrow)}`,2)" :class="{ 'selected': selectedNum === 2 }" >TMRW, {{ formatDate(tomorrow) }}</a>
     </div>
 
     <div>
-      <a @click="selectDate(`TAT ${formatDate(dayAfterTomorrow)}`,` ${dayAfterTomorrow}`)" :class="{ 'selected': selectedNum === 3 }">TAT, {{ formatDate(dayAfterTomorrow) }}</a>
+      <a @click="selectDate(`TAT ${formatDate(dayAfterTomorrow)}`,` ${formatDate(dayAfterTomorrow)}`,3)" :class="{ 'selected': selectedNum === 3 }">TAT, {{ formatDate(dayAfterTomorrow) }}</a>
     </div>
   </div>
 </template>

@@ -1,7 +1,24 @@
 const meal = require("../../../models/meal");
 const {dlg, carrillo, portola }= require("../../../models/commons");
 
+let date = new Date();
+let year = date.toLocaleString("default", { year: "numeric" });
+let month = date.toLocaleString("default", { month: "2-digit" });
+let day = date.toLocaleString("default", { day: "2-digit" });
+let defaultFormattedDate = year + "-" + month + "-" + day;
+let formattedDate1 = defaultFormattedDate;
+
 module.exports = {
+    post: async (req,res) => {
+      try {
+        const receivedData = req.body.data;
+        formattedDate1 = receivedData;
+        //console.log(formattedDate1);
+        res.json({ message: ": " + formattedDate1});
+      } catch (error) {
+        console.error(error);
+      }
+    },
     get: async (req, res) => {
       try {
         const m = await meal.findAll({
@@ -18,6 +35,9 @@ module.exports = {
       try {
         const data = await dlg.findAll({
           attributes:['date', 'food', 'station'],
+          where: {
+            date: formattedDate1
+          },
         });
 
         res.status(200).json(data);

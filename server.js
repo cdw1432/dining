@@ -18,20 +18,9 @@ app.get('/api/data', (req, res) => {
     res.json(data);
 });
 
-let formattedDate;
-//receiving data from fe
-app.post('/api/data', (req, res) => {
-    const receivedData = req.body.data;
-    formattedDate = receivedData
-    console.log(count + ": " + receivedData);
-    count++
-    res.json({ message: count + ": " + receivedData });
-  });
 const { job: dbUpdateJob } = dbUpdate();
 
 
 app.listen(process.env.PORT, () => {
     console.log("SERVER RUNNING ON PORT:", process.env.PORT)
 })
-
-module.exports = formattedDate;
