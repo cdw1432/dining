@@ -3,7 +3,7 @@ const schedule = require('node-schedule');
 const dbController = require('./controllers/dbController');
 
 const dbUpdateJob = () => {
-  const job = schedule.scheduleJob('11 14 * * *', async () => {
+  const job = schedule.scheduleJob('5 12 * * *', async () => {
     const today = new Date();
     const tomorrow = new Date();
     const dayAfterTomorrow = new Date();

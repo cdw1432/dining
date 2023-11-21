@@ -15,6 +15,8 @@ import axios from 'axios'
         axios.get('http://localhost:3000/v1/meal/dlg')
         .then(response => {
           this.dataFromServer = response.data;
+          if(this.dataFromServer.length == 0)
+              this.dataFromServer = "dinner not served"
           console.log(this.dataFromServer);
         })
         .catch(error => {

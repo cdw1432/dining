@@ -50,6 +50,9 @@ module.exports = {
       try {
         const data = await carrillo.findAll({
           attributes:['date', 'food', 'station'],
+          where: {
+            date: formattedDate1
+          },
         });
 
         res.status(200).json(data);
@@ -62,6 +65,9 @@ module.exports = {
       try {
         const data = await portola.findAll({
           attributes:['date', 'food', 'station'],
+          where: {
+            date: formattedDate1
+          },
         });
 
         res.status(200).json(data);

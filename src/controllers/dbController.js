@@ -32,6 +32,9 @@ module.exports = {
           // console.log('API URL:', `${apiURL}/${date_time}/${commons}/dinner`);
           // console.log('API Key:', apiKey);
           if (!response.ok) {
+            if(response.status == 404) {
+              console.log('dinner not served, maybe');
+            }
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
       
@@ -66,6 +69,9 @@ module.exports = {
           // console.log('API URL:', `${apiURL}/${date_time}/${commons}/dinner`);
           // console.log('API Key:', apiKey);
           if (!response.ok) {
+            if(response.status == 404) {
+              console.log('dinner not served, maybe');
+            }
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
       
@@ -100,6 +106,9 @@ module.exports = {
           // console.log('API URL:', `${apiURL}/${date_time}/${commons}/dinner`);
           // console.log('API Key:', apiKey);
           if (!response.ok) {
+            if(response.status == 404) {
+              console.log('dinner not served, maybe');
+            }
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
       
