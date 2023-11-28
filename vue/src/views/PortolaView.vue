@@ -3,13 +3,31 @@ import axios from 'axios'
   export default {
     data() {
     return {
-      dataFromServer : null
+      dataFromServer : null,
+      selectedDate: null,
+      groupedByStation: null
     };
   },
     created() {
+      axios
+        .get('http://localhost:3000/v1/api/date')
+        .then((response) => {
+          this.selectedDate = response.data
+          console.log(response.data);
+        })
       this.getDataFromServer();
     },
     methods: {
+      groupDataByStation() {
+      this.groupedByStation = this.dataFromServer.reduce((acc, item) => {
+        const { station } = item;
+        if (!acc[station]) {
+          acc[station] = [];
+        }
+        acc[station].push(item);
+        return acc;
+      }, {});
+    },
       getDataFromServer() {
         axios.get('http://localhost:3000/v1/meal/portola')
         .then(response => {
@@ -22,14 +40,27 @@ import axios from 'axios'
           console.error('Error fetching data:', error);
         });
       }
-    }
+    },
+    watch: {
+    dataFromServer() {
+      this.groupDataByStation();
+    },
+  },
   }
 </script>
 
 <template>
     <div class="portola">
+      <a id="sel">{{ selectedDate }}</a>
       <h1>This is a portola page</h1>
-      <pre>{{ JSON.stringify(dataFromServer, null, 2) }}</pre>
+      <div v-if="groupedByStation">
+      <div v-for="(items, station) in groupedByStation" :key="station" class="station-container">
+        <h2>{{ station }}</h2>
+        <ul>
+          <li v-for="(item, index) in items" :key="index">{{ item.food }}</li>
+        </ul>
+      </div>
+    </div>
      
     </div>
   </template>
@@ -42,5 +73,9 @@ import axios from 'axios'
       align-items: center;
     }
   } */
+  #sel {
+    background-color: hsla(0, 0%, 95%, 0.2);
+    font-size: 30px;
+  }
   </style>
   

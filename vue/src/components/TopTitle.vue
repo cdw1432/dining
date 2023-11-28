@@ -6,7 +6,8 @@ defineProps({
   }
 })
 const handleMsgClick = () => {
-  location.reload();
+  location.href = window.location.href.replace(/\/[^/]*$/, '');
+  console.log(location.href);
 };
 </script>
 

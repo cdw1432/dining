@@ -37,10 +37,11 @@ export default {
   day: '2-digit',
   month: '2-digit',
 }))
+this.$emit('date-selected', this.selectedDate);
     },
      sendSelectedDateToServer(date) {
       let arr = date.split('/');
-      let formatted = arr[2] + '-' + arr[0] + '-' + arr[1]
+      let formatted = arr[2] + '-' + arr[0] + '-' + arr[1];
        axios
         .post('http://localhost:3000/v1/api/data', { data: formatted })
         .then((response) => {

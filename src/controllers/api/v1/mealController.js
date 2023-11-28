@@ -19,6 +19,14 @@ module.exports = {
         console.error(error);
       }
     },
+    getDate: async (req,res) => {
+      try {
+        //console.log(formattedDate1);
+        res.send(formattedDate1)
+      } catch (error) {
+        console.error(error);
+      }
+    },
     get: async (req, res) => {
       try {
         const m = await meal.findAll({

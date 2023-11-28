@@ -1,9 +1,10 @@
 // dbUpdate.js
 const schedule = require('node-schedule');
 const dbController = require('./controllers/dbController');
+const iterateTableItems = require('./imageUpdate');
 
 const dbUpdateJob = () => {
-  const job = schedule.scheduleJob('5 12 * * *', async () => {
+  const job = schedule.scheduleJob('14 14 * * *', async () => {
     const today = new Date();
     const tomorrow = new Date();
     const dayAfterTomorrow = new Date();
@@ -29,6 +30,8 @@ const dbUpdateJob = () => {
       await dbController.fetchAndStorePortola(formattedDayAfterTomorrow);
 
       console.log('Database update completed.');
+      
+      iterateTableItems();
     } catch (error) {
       console.error('Error updating database:', error.message);
     }

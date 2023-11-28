@@ -20,6 +20,10 @@ const dlg = db.define(
             type: DataTypes.STRING,
             allowNull: true,
         },
+        url: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        }
     }, {
         tableName: 'dlg',
         timestamps: false,
@@ -44,6 +48,10 @@ const carrillo = db.define(
             type: DataTypes.STRING,
             allowNull: true,
         },
+        url: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        }
     }, {
         tableName: 'carrillo',
         timestamps: false,
@@ -68,6 +76,10 @@ const portola = db.define(
             type: DataTypes.STRING,
             allowNull: true,
         },
+        url: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        }
     }, {
         tableName: 'portola',
         timestamps: false,
