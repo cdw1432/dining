@@ -50,34 +50,41 @@ import axios from 'axios'
 </script>
 
 <template>
-    <div class="portola">
-      <a id="sel">{{ selectedDate }}</a>
-      <h1>This is a portola page</h1>
-      <div v-if="groupedByStation">
+  <div class="portola">
+    <a id="sel">{{ selectedDate }}</a>
+    <h1>This is a portola page</h1>
+    <div v-if="groupedByStation">
       <div v-for="(items, station) in groupedByStation" :key="station" class="station-container">
         <h2>{{ station }}</h2>
         <ul>
-          <li v-for="(item, index) in items" :key="index">
-            <img :src="item.url" :alt="item.food">{{ item.food }}
+          <li v-for="(item, index) in items" :key="index" class="food-item">
+            <img id="imgpic" :src="item.url" :alt="item.food">
+            <a id="food">{{ item.food }}</a>
           </li>
         </ul>
       </div>
     </div>
-     
-    </div>
-  </template>
-  
-  <style>
-  /* @media (min-width: 1024px) {
-    .portola {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-    }
-  } */
-  #sel {
-    background-color: hsla(0, 0%, 95%, 0.2);
-    font-size: 30px;
-  }
-  </style>
+  </div>
+</template>
+
+<style>
+#sel {
+  background-color: hsla(0, 0%, 95%, 0.2);
+  font-size: 30px;
+}
+
+.food-item {
+  display: flex;
+  align-items: center;
+}
+
+#imgpic {
+  margin-right: 10px; 
+}
+
+#food {
+  font-size: 30px;
+  margin: 10px;
+}
+</style>
   
