@@ -57,7 +57,9 @@ import axios from 'axios'
       <div v-for="(items, station) in groupedByStation" :key="station" class="station-container">
         <h2>{{ station }}</h2>
         <ul>
-          <li v-for="(item, index) in items" :key="index">{{ item.food }}</li>
+          <li v-for="(item, index) in items" :key="index">
+            <img :src="item.url" :alt="item.food">{{ item.food }}
+          </li>
         </ul>
       </div>
     </div>

@@ -1,31 +1,85 @@
 const {dlg, carrillo, portola} = require('./models/commons');
 const fetch = require('node-fetch');
 
-const apiKey = process.env.SEARCH_KEY
+const apiKeyD = process.env.SEARCH_KEY1
+const apiKeyC = process.env.SEARCH_KEY2
+const apiKeyP = process.env.SEARCH_KEY3
+
 const apiURL = process.env.SEARCH_URL
 const cx = process.env.SEARCH_ID;
 const imageSize = 'medium';
 
-const iterateTableItems = async () => {
-    try {
-      const itemsDLG = await dlg.findAll();
-      if(itemsDLG != null) {
-        for (const item of itemsDLG) {
-          if (item.url == null) {
-            console.log('Item:', item.date, item.food, item.station);
-            const response = await fetch(
-              `${apiURL}q=${encodeURIComponent(item.food)}&key=${apiKey}&cx=${cx}&searchType=image&num=1&imgSize=${imageSize}`
-            );
-            const data = await response.json();
-            console.log(data);
-          }
+const iterateTableItemsDLG = async () => {
+  try {
+    const itemsDLG = await dlg.findAll();
+    if (itemsDLG != null) {
+      for (let item of itemsDLG) {
+        if (item.url == null) {
+          console.log('Item:', item.date, item.food, item.station);
+          await updateItem(item,apiKeyD, dlg);
         }
-    
-        console.log('Iteration complete.');
       }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
-  module.exports = iterateTableItems
+      console.log('Iteration complete.');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+const iterateTableItemsCAR = async () => {
+  try {
+    const itemsCAR = await carrillo.findAll();
+    if (itemsCAR != null) {
+      for (let item of itemsCAR) {
+        if (item.url == null) {
+          console.log('Item:', item.date, item.food, item.station);
+          await updateItem(item, apiKeyC, carrillo);
+        }
+      }
+
+      console.log('Iteration complete.');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+const iterateTableItemsPOR = async () => {
+  try {
+    const itemsPOR = await portola.findAll();
+    if (itemsPOR != null) {
+      for (let item of itemsPOR) {
+        if (item.url == null) {
+          console.log('Item:', item.date, item.food, item.station);
+          await updateItem(item, apiKeyP, portola);
+        }
+      }
+
+      console.log('Iteration complete.');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+const updateItem = async (currentItem, key, commons) => {
+  try {
+    const response = await fetch(
+      `${apiURL}q=${encodeURIComponent(currentItem.food)}&key=${key}&cx=${cx}&searchType=image&num=1&imgSize=${imageSize}`
+    );
+    const data = await response.json();
+
+    if (!data.error && data.items && data.items.length > 0) {
+      console.log('Link:', data.items[0].link);
+      
+      // Use Sequelize update method to directly update the record
+      await commons.update({ url: data.items[0].link }, { where: { food: currentItem.food } });
+    } else {
+      console.log('Error from Google API, image update');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+module.exports = {iterateTableItemsCAR,
+                  iterateTableItemsDLG,
+                  iterateTableItemsPOR};

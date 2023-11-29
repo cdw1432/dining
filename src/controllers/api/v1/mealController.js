@@ -42,7 +42,7 @@ module.exports = {
     getDLG: async (req,res) => {
       try {
         const data = await dlg.findAll({
-          attributes:['date', 'food', 'station'],
+          attributes:['date', 'food', 'station', 'url'],
           where: {
             date: formattedDate1
           },
@@ -57,7 +57,7 @@ module.exports = {
     getCarrillo: async (req,res) => {
       try {
         const data = await carrillo.findAll({
-          attributes:['date', 'food', 'station'],
+          attributes:['date', 'food', 'station',  'url'],
           where: {
             date: formattedDate1
           },
@@ -72,7 +72,7 @@ module.exports = {
     getPortola: async (req,res) => {
       try {
         const data = await portola.findAll({
-          attributes:['date', 'food', 'station'],
+          attributes:['date', 'food', 'station',  'url'],
           where: {
             date: formattedDate1
           },
