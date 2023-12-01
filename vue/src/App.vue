@@ -8,10 +8,10 @@ import Top from './components/TopTitle.vue'
     <div class="wrapper">
       <Top msg="Dining" />
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/dlg">D</RouterLink>
-        <RouterLink to="/carrillo">C</RouterLink>
-        <RouterLink to="/portola">P</RouterLink>
+        <RouterLink to="/">DATE</RouterLink>
+        <RouterLink to="/dlg">DLG</RouterLink>
+        <RouterLink to="/carrillo">CARRILLO</RouterLink>
+        <RouterLink to="/portola">PORTOLA</RouterLink>
       </nav>
     </div>
   </header>
@@ -32,7 +32,7 @@ header {
 
 nav {
   width: 100%;
-  font-size: 12px;
+  font-size: 15px;
   text-align: center;
   margin-top: 2rem;
 }

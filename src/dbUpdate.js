@@ -4,7 +4,7 @@ const dbController = require('./controllers/dbController');
 const {iterateTableItemsDLG, iterateTableItemsPOR, iterateTableItemsCAR} = require('./imageUpdate');
 
 const dbUpdateJob = () => {
-  const job = schedule.scheduleJob('28 16 * * *', async () => {
+  const job = schedule.scheduleJob('15 15 * * *', async () => {
     const today = new Date();
     const tomorrow = new Date();
     const dayAfterTomorrow = new Date();

@@ -16,11 +16,6 @@ npm run dev
 [#vue](https://vuejs.org/)
 
 #### current progress
-<div>
-    <img src="./img/h.png" alt="Image 1" style="width: 50%;"><br/>
-    <img src="./img/d.png" alt="Image 2" style="width: 50%;"><br/>
-    <img src="./img/c.png" alt="Image 3" style="width: 50%;"><br/>
-    <img src="./img/p.png" alt="Image 4" style="width: 50%;"><br/>
-</div>
+<img src="./rsc/view.gif" />
 
 

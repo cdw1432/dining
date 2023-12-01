@@ -6,7 +6,8 @@ import axios from 'axios'
     return {
       dataFromServer : null,
       selectedDate: null,
-      groupedByStation: null
+      groupedByStation: null,
+      isImageExpanded: [],
     };
   },created() {
     axios
@@ -27,6 +28,7 @@ import axios from 'axios'
         acc[station].push(item);
         return acc;
       }, {});
+      this.isImageExpanded = Array.from({ length: this.groupedByStation.length * 17 }, () => false);
     },
       getDataFromServer() {
         axios.get('http://localhost:3000/v1/meal/carrillo')
@@ -39,7 +41,11 @@ import axios from 'axios'
         .catch(error => {
           console.error('Error fetching data:', error);
         });
-      }
+      },
+      toggleImageSize(stationIndex, itemIndex) {
+      const index = stationIndex * 17 + itemIndex;
+      this.isImageExpanded[index] = !this.isImageExpanded[index]
+    },
     },
     watch: {
     dataFromServer() {
@@ -50,15 +56,23 @@ import axios from 'axios'
 </script>
 <template>
     <div class="carrillo">
-      <a id="sel">{{ selectedDate }}</a>
-      <h1>This is a carrillo page</h1>
-      <div v-if="groupedByStation">
-      <div v-for="(items, station) in groupedByStation" :key="station" class="station-container">
-        <h2>{{ station }}</h2>
+      <h1>Carrillo: <a id="sel">{{ selectedDate }}</a></h1>
+      <div v-for="(items, station, sindex) in groupedByStation" :key="station" class="station-container">
+        <a :href="'#span'+sindex" id="chapters">*{{ station }}</a>
+    </div>
+    <div v-if="groupedByStation">
+      <div v-for="(items, station, sindex) in groupedByStation" :key="station" class="station-container">
+        <h2 id="station"><span :id="'span'+index">***{{ station }}***</span></h2>
         <ul>
           <li v-for="(item, index) in items" :key="index" class="food-item">
-            <img id="imgpic" :src="item.url" :alt="item.food">
-            <a id="food">{{ item.food }}</a>
+            <img
+              @click="toggleImageSize(sindex, index)"
+              id="imgpic"
+              :src="item.url"
+              :alt="item.food"
+              :style="{ width: isImageExpanded[sindex * 17 + index] ? '47%' : '17%' }"
+            />
+            <a :href="'http://www.google.com/search?q=' + item.food" id="food">{{ item.food }}</a>
           </li>
         </ul>
       </div>
@@ -76,7 +90,7 @@ import axios from 'axios'
   } */
   #sel {
     background-color: hsla(0, 0%, 95%, 0.2);
-    font-size: 30px;
+    font-size: 25px;
   }
   .food-item {
   display: flex;
@@ -85,11 +99,17 @@ import axios from 'axios'
 
 #imgpic {
   margin-right: 10px; 
+  transition: width 0.3s ease
 }
 
 #food {
-  font-size: 30px;
+  font-size: 20px;
   margin: 10px;
+  color: rgb(0, 146, 97);
+}
+#station {
+  color:  hsla(160, 100%, 37%, 1);
+  text-align: center;
 }
   </style>
   

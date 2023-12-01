@@ -7,7 +7,7 @@ const apiKeyP = process.env.SEARCH_KEY3
 
 const apiURL = process.env.SEARCH_URL
 const cx = process.env.SEARCH_ID;
-const imageSize = 'medium';
+const imageSize = 'large';
 
 const iterateTableItemsDLG = async () => {
   try {
@@ -63,14 +63,14 @@ const iterateTableItemsPOR = async () => {
 const updateItem = async (currentItem, key, commons) => {
   try {
     const response = await fetch(
-      `${apiURL}q=${encodeURIComponent(currentItem.food)}&key=${key}&cx=${cx}&searchType=image&num=1&imgSize=${imageSize}`
+      `${apiURL}q=${encodeURIComponent(currentItem.food)}%20image&key=${key}&cx=${cx}&searchType=image&num=1&imgSize=${imageSize}`
     );
     const data = await response.json();
 
     if (!data.error && data.items && data.items.length > 0) {
-      console.log('Link:', data.items[0].link);
+      console.log('API:',`${apiURL}q=${encodeURIComponent(currentItem.food)}%20image&key=${key}&cx=${cx}&searchType=image&num=1&imgSize=${imageSize}`,
+                  'Link:', data.items[0].link);
       
-      // Use Sequelize update method to directly update the record
       await commons.update({ url: data.items[0].link }, { where: { food: currentItem.food } });
     } else {
       console.log('Error from Google API, image update');
