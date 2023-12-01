@@ -63,12 +63,12 @@ const iterateTableItemsPOR = async () => {
 const updateItem = async (currentItem, key, commons) => {
   try {
     const response = await fetch(
-      `${apiURL}q=${encodeURIComponent(currentItem.food)}%20image&key=${key}&cx=${cx}&searchType=image&num=1&imgSize=${imageSize}`
+      `${apiURL}q=${encodeURIComponent(currentItem.food + ' image')}&key=${key}&cx=${cx}&searchType=image&num=1` //imgSize=${imageSize}
     );
     const data = await response.json();
 
     if (!data.error && data.items && data.items.length > 0) {
-      console.log('API:',`${apiURL}q=${encodeURIComponent(currentItem.food)}%20image&key=${key}&cx=${cx}&searchType=image&num=1&imgSize=${imageSize}`,
+      console.log('API:',`${apiURL}q=${encodeURIComponent(currentItem.food + ' image')}&key=${key}&cx=${cx}&searchType=image&num=1`,
                   'Link:', data.items[0].link);
       
       await commons.update({ url: data.items[0].link }, { where: { food: currentItem.food } });
